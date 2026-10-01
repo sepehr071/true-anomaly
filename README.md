@@ -99,3 +99,7 @@ The simulation uses true kilometres. Display uses 1 AU = 4000 units, planet radi
 ## License
 
 MIT, see `LICENSE`. Third-party data and textures keep their own terms as listed above.
+
+---
+
+<sub>Built by <a href="https://sepehrradmard.ir">Sepehr Radmard</a> · <a href="https://www.linkedin.com/in/sepehr-radmard/">LinkedIn</a> · <a href="https://github.com/sepehr071">GitHub</a> · more projects on my <a href="https://github.com/sepehr071">profile</a></sub>
