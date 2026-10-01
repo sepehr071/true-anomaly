@@ -1,0 +1,21 @@
+{
+  "name": "true-anomaly",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "bake": "node scripts/bake-sol.mjs",
+    "check": "npx tsx src/sim/kepler.check.ts"
+  },
+  "dependencies": {
+    "three": "^0.183.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.183.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  }
+}

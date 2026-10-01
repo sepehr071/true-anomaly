@@ -1,0 +1,250 @@
+{
+  "epochJd": 2461275.5,
+  "epochIso": "2026-08-23T00:00:00Z",
+  "auKm": 149597870.7,
+  "gmSun": 132712440041.27942,
+  "bodies": [
+    {
+      "id": "sun",
+      "name": "Sun",
+      "horizonsId": "10",
+      "radiusKm": 695700,
+      "flattening": 0,
+      "rotationDays": 25.38,
+      "obliquityDeg": 7.25,
+      "gm": 132712440041.27942,
+      "parent": null,
+      "ring": false,
+      "texture": "sun",
+      "elements": {
+        "a": 0,
+        "e": 0,
+        "i": 0,
+        "om": 0,
+        "w": 0,
+        "M": 0
+      },
+      "source": "fallback-j2000-mean"
+    },
+    {
+      "id": "mercury",
+      "name": "Mercury",
+      "horizonsId": "199",
+      "radiusKm": 2440.53,
+      "flattening": 0,
+      "rotationDays": 58.6462,
+      "obliquityDeg": 0.034,
+      "gm": 22031.868551,
+      "parent": "sun",
+      "ring": false,
+      "texture": "mercury",
+      "elements": {
+        "a": 0.387098207361036,
+        "e": 0.20563799342211864,
+        "i": 7.0033698663353725,
+        "om": 48.29739301388156,
+        "w": 29.20205207669789,
+        "M": 35.25534150120233
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "venus",
+      "name": "Venus",
+      "horizonsId": "299",
+      "radiusKm": 6051.8,
+      "flattening": 0,
+      "rotationDays": -243.018,
+      "obliquityDeg": 177.36,
+      "gm": 324858.592,
+      "parent": "sun",
+      "ring": false,
+      "texture": "venus",
+      "elements": {
+        "a": 0.7233328966562971,
+        "e": 0.006773162850341069,
+        "i": 3.3943565720176005,
+        "om": 76.60650897718084,
+        "w": 54.89848847797638,
+        "M": 160.00676910922627
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "earth",
+      "name": "Earth",
+      "horizonsId": "399",
+      "radiusKm": 6378.1366,
+      "flattening": 0.003353,
+      "rotationDays": 0.99726968,
+      "obliquityDeg": 23.439,
+      "gm": 398600.435507,
+      "parent": "sun",
+      "ring": false,
+      "texture": "earth",
+      "elements": {
+        "a": 0.9995792955026884,
+        "e": 0.017157709105644396,
+        "i": 0.0045479183849500854,
+        "om": 170.08729298605954,
+        "w": 293.26085940300806,
+        "M": 227.62054037347187
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "moon",
+      "name": "Moon",
+      "horizonsId": "301",
+      "radiusKm": 1737.4,
+      "flattening": 0.0012,
+      "rotationDays": 27.321661,
+      "obliquityDeg": 6.68,
+      "gm": 4902.800118,
+      "parent": "earth",
+      "ring": false,
+      "texture": "moon",
+      "elements": {
+        "a": 0.002580853556158482,
+        "e": 0.04824791829937793,
+        "i": 5.279316022371272,
+        "om": 329.43802737657217,
+        "w": 111.35926238793716,
+        "M": 191.21785221419532
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "mars",
+      "name": "Mars",
+      "horizonsId": "499",
+      "radiusKm": 3396.19,
+      "flattening": 0.00589,
+      "rotationDays": 1.02595676,
+      "obliquityDeg": 25.19,
+      "gm": 42828.375816,
+      "parent": "sun",
+      "ring": false,
+      "texture": "mars",
+      "elements": {
+        "a": 1.5236176711591312,
+        "e": 0.09342423012916164,
+        "i": 1.8474716071672332,
+        "om": 49.481157534980916,
+        "w": 286.6185576076847,
+        "M": 78.45727482080815
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "jupiter",
+      "name": "Jupiter",
+      "horizonsId": "599",
+      "radiusKm": 71492,
+      "flattening": 0.06487,
+      "rotationDays": 0.41354,
+      "obliquityDeg": 3.13,
+      "gm": 126712764.1,
+      "parent": "sun",
+      "ring": false,
+      "texture": "jupiter",
+      "elements": {
+        "a": 5.206949592587965,
+        "e": 0.04797260828495416,
+        "i": 1.303690734773584,
+        "om": 100.5202037089586,
+        "w": 274.5173448079444,
+        "M": 107.84818414411315
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "saturn",
+      "name": "Saturn",
+      "horizonsId": "699",
+      "radiusKm": 60268,
+      "flattening": 0.09796,
+      "rotationDays": 0.44401,
+      "obliquityDeg": 26.73,
+      "gm": 37940584.8418,
+      "parent": "sun",
+      "ring": true,
+      "texture": "saturn",
+      "elements": {
+        "a": 9.543969067884124,
+        "e": 0.05533688759989689,
+        "i": 2.488505262450308,
+        "om": 113.6861487342186,
+        "w": 338.3024550818666,
+        "M": 283.74544659583387
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "uranus",
+      "name": "Uranus",
+      "horizonsId": "799",
+      "radiusKm": 25559,
+      "flattening": 0.02293,
+      "rotationDays": -0.71833,
+      "obliquityDeg": 97.77,
+      "gm": 5794556.4,
+      "parent": "sun",
+      "ring": false,
+      "texture": "uranus",
+      "elements": {
+        "a": 19.266458110998894,
+        "e": 0.047429027274707485,
+        "i": 0.7746554344410356,
+        "om": 73.98703123226174,
+        "w": 92.35101872449364,
+        "M": 261.1834101304313
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "neptune",
+      "name": "Neptune",
+      "horizonsId": "899",
+      "radiusKm": 24764,
+      "flattening": 0.01708,
+      "rotationDays": 0.67125,
+      "obliquityDeg": 28.32,
+      "gm": 6836527.10058,
+      "parent": "sun",
+      "ring": false,
+      "texture": "neptune",
+      "elements": {
+        "a": 30.0736922758694,
+        "e": 0.009935240110524579,
+        "i": 1.7753637845965835,
+        "om": 131.98842989910202,
+        "w": 280.2054747781874,
+        "M": 311.09682211935336
+      },
+      "source": "horizons-vectors 2026-08-23"
+    },
+    {
+      "id": "pluto",
+      "name": "Pluto",
+      "horizonsId": "999",
+      "radiusKm": 1188.3,
+      "flattening": 0,
+      "rotationDays": -6.3872,
+      "obliquityDeg": 122.53,
+      "gm": 975.5,
+      "parent": "sun",
+      "ring": false,
+      "texture": "pluto",
+      "elements": {
+        "a": 38.92331694256705,
+        "e": 0.2454456052293858,
+        "i": 17.137932491159773,
+        "om": 110.30334820297588,
+        "w": 110.88071358301823,
+        "M": 56.360405538964585
+      },
+      "source": "horizons-vectors 2026-08-23"
+    }
+  ]
+}

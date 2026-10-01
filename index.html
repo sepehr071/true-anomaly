@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>True Anomaly</title>
+    <meta name="description" content="Fly a 6DOF probe through a real-scale solar system built from NASA/JPL Horizons data." />
+    <meta name="theme-color" content="#0c0a08" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0a08'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='7' fill='none' stroke='%23d4a45a' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23b9b3a8'/%3E%3Ccircle cx='27' cy='19' r='2' fill='%23d4a45a'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --vac: #0c0a08;
+        --gold: #d4a45a;
+        --ash: #b9b3a8;
+        --fault: #c44b32;
+        --dim: #6e675c;
+        --line: rgba(212, 164, 90, 0.35);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 100%; height: 100%; overflow: hidden; background: var(--vac); }
+      #c { display: block; width: 100%; height: 100%; }
+      #hud {
+        position: fixed; inset: 0; pointer-events: none;
+        color: var(--gold);
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 12px; letter-spacing: 0.04em;
+        text-shadow: 0 0 8px rgba(212, 164, 90, 0.25);
+      }
+      .edge {
+        position: absolute; left: 18px; right: 18px; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--line), transparent);
+      }
+      .edge.top { top: 42px; }
+      .edge.bot { bottom: 86px; }
+      #brand {
+        position: absolute; top: 14px; left: 20px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700; font-size: 18px; letter-spacing: 0.28em;
+        color: var(--ash);
+      }
+      #brand span { color: var(--gold); }
+      #clock {
+        position: absolute; top: 16px; right: 20px;
+        color: var(--ash); font-size: 11px;
+      }
+      #tape {
+        position: absolute; left: 20px; top: 56px; width: 88px;
+      }
+      #tape .lab { color: var(--dim); font-size: 10px; margin-bottom: 6px; }
+      .bar {
+        width: 8px; height: 120px; border: 1px solid var(--line);
+        position: relative; background: rgba(212, 164, 90, 0.05);
+      }
+      .bar > i {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        background: var(--gold); opacity: 0.85;
+      }
+      #readout {
+        position: absolute; left: 20px; bottom: 18px; right: 280px;
+        display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;
+      }
+      #readout b {
+        display: block; color: var(--dim); font-weight: 400;
+        font-size: 10px; letter-spacing: 0.16em; margin-bottom: 4px;
+      }
+      #readout em { font-style: normal; font-size: 15px; color: var(--gold); }
+      #bodies {
+        position: absolute; right: 18px; top: 56px; bottom: 100px;
+        width: 212px; overflow: hidden;
+        border-left: 1px solid var(--line); padding-left: 14px;
+      }
+      #bodies .lab { color: var(--dim); font-size: 10px; margin-bottom: 8px; letter-spacing: 0.16em; }
+      #bodies ul { list-style: none; }
+      #bodies li {
+        display: flex; justify-content: space-between; gap: 10px;
+        padding: 3px 6px; margin-left: -6px; color: var(--dim); cursor: default;
+        font-variant-numeric: tabular-nums;
+      }
+      #bodies li i { font-style: normal; font-size: 10px; opacity: 0.8; }
+      #bodies li.sel {
+        color: var(--gold);
+        background: linear-gradient(90deg, rgba(212, 164, 90, 0.14), transparent);
+        box-shadow: inset 2px 0 0 var(--gold);
+      }
+      #bodies li.lock span::after { content: " ◆"; font-size: 8px; vertical-align: 1px; color: var(--gold); }
+      #cross {
+        position: absolute; left: 50%; top: 48%; width: 18px; height: 18px;
+        transform: translate(-50%, -50%);
+      }
+      #cross::before, #cross::after {
+        content: ""; position: absolute; background: var(--gold); opacity: 0.7;
+      }
+      #cross::before { left: 8px; top: 0; width: 1px; height: 18px; }
+      #cross::after { left: 0; top: 8px; width: 18px; height: 1px; }
+      #pause, #prox {
+        position: absolute; left: 50%; transform: translateX(-50%);
+        font-family: "Barlow Condensed", sans-serif;
+        letter-spacing: 0.22em; text-transform: uppercase;
+      }
+      #pause {
+        top: 68%; font-size: 22px; color: var(--ash);
+        pointer-events: none; text-align: center; white-space: nowrap;
+        padding: 12px 26px 11px;
+        background: rgba(12, 10, 8, 0.78);
+        border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(6px);
+      }
+      #pause small {
+        display: block; margin-top: 6px;
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 11px; letter-spacing: 0.08em; text-transform: none; color: var(--ash); opacity: 0.7;
+      }
+      #pause .boot { animation: blink 1.4s ease-in-out infinite; }
+      #hud.ready #pause .boot, #hud:not(.ready) #pause .go { display: none; }
+      @keyframes blink { 50% { opacity: 0.45; } }
+      @media (prefers-reduced-motion: reduce) { #pause .boot { animation: none; } }
+      @media (max-width: 760px) {
+        #brand { font-size: 15px; }
+        #clock { top: 48px; left: 20px; right: auto; font-size: 10px; }
+        .edge.top { top: 40px; }
+        #tape { top: 72px; }
+        #bodies, #hint { display: none; }
+        #readout { right: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; }
+        .edge.bot { bottom: 118px; }
+        #pause { font-size: 17px; white-space: normal; width: 90%; }
+      }
+      #prox {
+        top: 56px; font-size: 16px; color: var(--fault);
+        display: none;
+      }
+      #hint {
+        position: absolute; right: 18px; bottom: 18px;
+        color: var(--dim); font-size: 10px; text-align: right; line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="hud">
+      <div class="edge top"></div>
+      <div class="edge bot"></div>
+      <div id="brand">TRUE <span>ANOMALY</span></div>
+      <div id="clock">UTC —</div>
+      <div id="tape">
+        <div class="lab">THROTTLE</div>
+        <div class="bar"><i id="thr" style="height:0%"></i></div>
+        <div class="lab" style="margin-top:14px">WARP</div>
+        <div id="warp">×1</div>
+      </div>
+      <div id="readout">
+        <div><b>TARGET</b><em id="tgt">EARTH</em></div>
+        <div><b>RANGE</b><em id="rng">—</em></div>
+        <div><b>SPEED</b><em id="spd">—</em></div>
+        <div><b>FRAME</b><em id="frm">EARTH LOCK</em></div>
+      </div>
+      <div id="bodies">
+        <div class="lab">ECLIPTIC</div>
+        <ul id="blist"></ul>
+      </div>
+      <div id="cross"></div>
+      <div id="prox">PROXIMITY</div>
+      <div id="pause">
+        <span class="boot">Loading ephemeris<small>JPL Horizons catalog and planet textures</small></span>
+        <span class="go">Click to take the helm<small>Esc releases the mouse and pauses the sim</small></span>
+      </div>
+      <div id="hint">
+        MOUSE LOOK · W THRUST · S BRAKE · A/D TURN<br />
+        Q/E ROLL · R/F LIFT · SHIFT BOOST · X STOP<br />
+        J JUMP · TAB TARGET · ,/. WARP · C CAMERA
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

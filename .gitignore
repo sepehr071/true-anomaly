@@ -1,0 +1,9 @@
+node_modules
+dist
+.firecrawl
+*.local
+.DS_Store
+public/shot.png
+*.log
+test-results
+playwright-report
